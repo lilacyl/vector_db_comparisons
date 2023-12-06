@@ -6,7 +6,7 @@ import private
 auth_config = weaviate.AuthApiKey(api_key=private.WEAVIET_API_KEY)
 
 client = weaviate.Client(
-  url="https://vector-db-comparison-weaviet-3axgm0q8.weaviate.network",
+  url="https://vectordb-project-weaviet-3knitmrj.weaviate.network",
   auth_client_secret=auth_config,
   additional_headers = {
         "X-OpenAI-Api-Key": private.OPEN_API_KEY  # Replace with your inference API key
@@ -14,12 +14,13 @@ client = weaviate.Client(
 )
 
 print(f"=====Connect to Weaviate=====")
-print(client.schema.get())
 class_obj = {
-    "class": "Question",
+    "class": "JeopardyQuestion",
     "vectorizer": "text2vec-openai",
     "moduleConfig": {
-        "text2vec-openai": {},
+        "text2vec-openai": {
+            "vectorizeClassName": True
+        },
         "generative-openai": {} 
     }
 }
@@ -44,3 +45,5 @@ with client.batch as batch:  # Initialize a batch process
             class_name="Question"
         )
 print("=====Added Embeddings=====")
+json_data = client.schema.get()
+print(json.dumps(json_data, indent=2))

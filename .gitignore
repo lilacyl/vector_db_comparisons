@@ -1,1 +1,4 @@
 weaviet/private.py
+.DS_Store
+data/sim_sentences
+data/sim_sentences.zip
